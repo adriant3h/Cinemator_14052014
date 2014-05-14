@@ -15,3 +15,18 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+//---------------------------//
+// cinemas
+//---------------------------//
+Route::resource('cinemas', 'CinemasController');
+
+//---------------------------//
+// movies
+//---------------------------//
+Route::resource('movies', 'MoviesController');
+
+//---------------------------//
+// session_times
+//---------------------------//
+Route::resource('session_times', 'SessionTimesController');
