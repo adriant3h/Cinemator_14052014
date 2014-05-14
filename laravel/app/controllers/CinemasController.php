@@ -11,7 +11,12 @@ class CinemasController extends \BaseController {
 	{
 	    // 1. get all cinemas
 	    $cinemas = Cinema::all()->toJson();
-	    return $cinemas;
+	    
+	    // 2. set headers and status code
+	    $response = Response::make($cinemas, 200);
+	    $response->header('Content-Type', 'application/json');
+	    
+	    return $response;
 	}
 
 
