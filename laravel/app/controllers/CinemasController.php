@@ -44,14 +44,30 @@ class CinemasController extends \BaseController {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param string  $name
 	 * @return Response
 	 */
 	public function show($name)
 	{
-	    $cinema = Cinema::where('name' , '=', $name)->first()->toJson();
-	    
-		return "show cinema $id";
+	    try 
+	    {
+	        // 1. find a cinema
+	        $cinema = Cinema::where('name' , '=', $name)->first();
+	       
+	        // 2. record exits
+	        if($cinema)
+	        {
+	            // 2.1 set headers and status code
+	            $response = Response::make($cinema->toJson(), 200);
+	            $response->header('Content-Type', 'application/json');
+	             
+	            return $response;
+	        }
+	    } 
+	    catch (Exception $e) 
+	    {
+	        // TODO: log here or redirect to/with status code
+	    }
 	}
 
 
