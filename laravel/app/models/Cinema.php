@@ -23,5 +23,8 @@
 class Cinema extends Eloquent
 {
 	protected $fillable = array('name', 'address', 'geo_lat', 'geo_lon');
+	
+	// let laravel know that timestamp is disabled
+	public $timestamps = false;
 }
 ?>

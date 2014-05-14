@@ -23,5 +23,8 @@
 class SessionTime extends Eloquent
 {
 	protected $fillable = array('cinema_id', 'movie_id', 'date_time');
+	
+	// let laravel know that timestamp is disabled
+	public $timestamps = false;
 }
 ?>

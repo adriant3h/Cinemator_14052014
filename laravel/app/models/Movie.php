@@ -23,5 +23,8 @@
 class Movie extends Eloquent
 {
 	protected $fillable = array('title'');
+	
+	// let laravel know that timestamp is disabled
+	public $timestamps = false;
 }
 ?>
