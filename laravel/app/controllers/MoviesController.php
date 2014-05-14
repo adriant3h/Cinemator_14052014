@@ -9,7 +9,14 @@ class MoviesController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+	    // 1. get all cinemas
+	    $results = Movie::all()->toJson();
+	     
+	    // 2. set headers and status code
+	    $response = Response::make($results, 200);
+	    $response->header('Content-Type', 'application/json');
+	     
+	    return $response; // ResponseFactory::create($cinemas);
 	}
 
 
@@ -38,12 +45,30 @@ class MoviesController extends \BaseController {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param string  $name
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($name)
 	{
-		//
+	    try
+	    {
+	        // 1. find a cinema
+	        $result = Movie::where('title' , '=', $name)->first();
+	    
+	        // 2. record exits
+	        if($result)
+	        {
+	            // 2.1 set headers and status code
+	            $response = Response::make($result->toJson(), 200);
+	            $response->header('Content-Type', 'application/json');
+	    
+	            return $response;
+	        }
+	    }
+	    catch (Exception $e)
+	    {
+	        // TODO: log here or redirect to/with status code
+	    }
 	}
 
 

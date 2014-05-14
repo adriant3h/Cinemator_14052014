@@ -9,10 +9,10 @@ class CinemasController extends \BaseController {
 	public function index()
 	{
 	    // 1. get all cinemas
-	    $cinemas = Cinema::all()->toJson();
+	    $results = Cinema::all()->toJson();
 	    
 	    // 2. set headers and status code
-	    $response = Response::make($cinemas, 200);
+	    $response = Response::make($results, 200);
 	    $response->header('Content-Type', 'application/json');
 	    
 	    return $response; // ResponseFactory::create($cinemas);
