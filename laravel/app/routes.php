@@ -31,18 +31,4 @@ Route::resource('cinemas', 'CinemasController');
 //---------------------------//
 Route::resource('movies', 'MoviesController');
 Route::resource('cinemas.movies', 'CinemaMoviesController');
-
-//---------------------------//
-// session_times
-//---------------------------//
-// TODO: Route::resource('session_times', 'SessionTimesController');
-
-//-------------------------------------//
-//
-// DEMO using type ie. GET
-//
-//-------------------------------------//
-Route::get('cinemas.movies/{date_time?}', function($date_time = null)
-{
-    return $date_time;
-});
+//Route::get('cinemas.movies/{date_time?}', 'CinemaMoviesController@show_by_date_time');

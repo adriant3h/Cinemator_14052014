@@ -9,6 +9,14 @@ class CinemaMoviesController extends \BaseController {
 	 */
 	public function index($cinema_name)
 	{
+	    // 0. get param date_time and mktime object to get session time range
+	    $date_time = Input::get('date_time');
+	   
+	    if($date_time != '' and is_numeric($date_time))
+	    {
+	        $range = CinemaMoviesController::get_day_start_stop_date_time($date_time);
+	    }
+	    
 	    // 1. find movie with given name or bail, cinema not found
 	    $cinema = Cinema::where('name' , '=', $cinema_name)->first();
 	    if(!$cinema)
@@ -19,8 +27,15 @@ class CinemaMoviesController extends \BaseController {
 	    
 	    // 2. find all movies for a cinema
 	    $session_times = SessionTime::with('movie', 'cinema')
-    	                   ->where('cinema_id' , '=', $cinema->id)
-    	                   ->get();
+    	                   ->where('cinema_id' , '=', $cinema->id);
+	    
+	    if(isset($range) and $range != null and is_array($range))
+	    {
+	        $session_times = $session_times
+	                           ->where('date_time' , '>=', $range['start_time'])
+	                           ->where('date_time' , '<=',  $range['stop_time']);
+	    }
+	    $session_times = $session_times->get();
 	    
 	    if($session_times)
 	    {
@@ -100,5 +115,27 @@ class CinemaMoviesController extends \BaseController {
 		//
 	}
 
-
+	/**
+	 * This function gets the start and stop time day range given a unix time
+	 *
+	 * @param  int  $date_time - unix time
+	 * @return array $array
+	 */
+	private function get_day_start_stop_date_time($date_time=null)
+	{
+	    if(!$date_time)
+	    {
+	        return;
+	    }
+	    
+	    $year      = date('d', $date_time);
+	    $month     = date('m', $date_time);
+	    $day       = date('d', $date_time);
+	     
+	    $array = array();
+	    $array['start_time'] = mktime(0, 0, 0, $month, $day, $year);
+	    $array['stop_time']  = mktime(23, 59, 59, $month, $day, $year);
+	    
+	    return $array;
+	}
 }

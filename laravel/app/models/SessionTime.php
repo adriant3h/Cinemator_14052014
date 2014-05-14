@@ -32,26 +32,29 @@ class SessionTime extends Eloquent
 	 * @param int $id          - a cinema id
 	 * @return array $array    - a kv array
 	 */
-	public static function get_movies_for_a_cinema($id)
-	{
-	    // get session times for a given cinema
-	    // bail if empty result, otherwise parse and return structured data
-	    $session_times = SessionTime::where('cinema_id' , '=', $id)->get();
-	    if(!$session_times)
-	    {
-	        return;
-	    }
-	    
-	    
-	    
-	    return $session_times;
-	}
+// 	public static function get_movies_for_a_cinema($id)
+// 	{
+// 	    // get session times for a given cinema
+// 	    // bail if empty result, otherwise parse and return structured data
+// 	    $session_times = SessionTime::where('cinema_id' , '=', $id)->get();
+// 	    if(!$session_times)
+// 	    {
+// 	        return;
+// 	    }
+// 	    // TODO: implement this?
+// 	}
 	
+	/**
+	 * This function defines the belongs to relationship
+	 */
 	public function movie() 
 	{
 	    return $this->belongsTo('Movie');
 	}
 	
+	/**
+	 * This function defines the belongs to relationship
+	 */
 	public function cinema()
 	{
 	    return $this->belongsTo('Cinema');
