@@ -42,7 +42,19 @@ class SessionTime extends Eloquent
 	        return;
 	    }
 	    
+	    
+	    
 	    return $session_times;
+	}
+	
+	public function movie() 
+	{
+	    return $this->belongsTo('Movie');
+	}
+	
+	public function cinema()
+	{
+	    return $this->belongsTo('Cinema');
 	}
 }
 ?>

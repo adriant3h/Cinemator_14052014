@@ -17,13 +17,17 @@ class CinemaMoviesController extends \BaseController {
 	        return;
 	    }
 	    
-	    // 2. find all movies for cinema or bail, no session times available
-	    $movies = SessionTime::get_movies_for_a_cinema($cinema->id);
-        	   
-	    $response = Response::make($movies->toJson(), 200);
-	    $response->header('Content-Type', 'application/json');
+	    // 2. find all movies for a cinema
+	    $session_times = SessionTime::with('movie', 'cinema')
+    	                   ->where('cinema_id' , '=', $cinema->id)
+    	                   ->get();
 	    
-	    return $response;
+	    if($session_times)
+	    {
+	        $response = Response::make($session_times->toJson(), 200);
+	        $response->header('Content-Type', 'application/json');
+	        return $response;
+	    }
 	}
 
 
