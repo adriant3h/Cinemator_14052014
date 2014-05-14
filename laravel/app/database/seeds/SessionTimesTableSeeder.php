@@ -21,7 +21,7 @@ use Illuminate\Database\Seeder;
  * @version	:  
  * @since	: 14/05/2014
  */
-class SessionTimesSeeder extends Seeder
+class SessionTimesTableSeeder extends Seeder
 {
 	public function run()
 	{
