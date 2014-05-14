@@ -12,10 +12,11 @@ class CreateMoviesTable extends Migration {
 	 */
 	public function up()
 	{
-		$table->increments('id');
-		$table->string('title', 255);
-		
-		$table->unsignedInteger('id');
+	   Schema::table('movies', function(Blueprint $table)
+	   {
+		  $table->increments('id');
+		  $table->string('title', 255);
+	   });
 	}
 
 	/**

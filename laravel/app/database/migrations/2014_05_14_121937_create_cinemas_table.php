@@ -19,8 +19,6 @@ class CreateCinemasTable extends Migration {
 			$table->string('address', 512);
 			$table->float('geo_lat', 10, 6);
 			$table->float('geo_lon', 10, 6);
-			
-			$table->unsignedInteger('id');
 		});
 	}
 

@@ -12,14 +12,13 @@ class CreateSessionTimesTable extends Migration {
 	 */
 	public function up()
 	{
-		$table->increments('id');
-	    $table->integer('cinema_id', false, true);
-	    $table->integer('movie_id', false, true);
-	    $table->bigInteger('date_time', false, true);
-	    
-	    $table->unsignedInteger('id');
-	    $table->unsignedInteger('cinema_id')->references('id')->on('cinemas');
-	    $table->unsignedInteger('movie_id')->references('id')->on('movies');
+	    Schema::table('session_times', function(Blueprint $table)
+	    {
+    		$table->increments('id');
+    	    $table->integer('cinema_id', false, true);
+    	    $table->integer('movie_id', false, true);
+    	    $table->bigInteger('date_time', false, true);
+	    });
 	}
 
 	/**
