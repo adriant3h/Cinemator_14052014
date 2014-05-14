@@ -26,21 +26,29 @@ class CinemaMoviesController extends \BaseController {
 	    }
 	    
 	    // 2. find all movies for a cinema
-	    $session_times = SessionTime::with('movie', 'cinema')
-    	                   ->where('cinema_id' , '=', $cinema->id);
-	    
 	    if(isset($range) and $range != null and is_array($range))
 	    {
-	        $session_times = $session_times
-	                           ->where('date_time' , '>=', $range['start_time'])
-	                           ->where('date_time' , '<=',  $range['stop_time']);
+	        $session_times = $session_times = SessionTime::with('movie', 'cinema')
+    	                       ->where('cinema_id' , '=', $cinema->id)
+	                           ->whereBetween('date_time' , $range, 'AND')
+	                           ->get();
+	    }  
+	    // **duplicated code, query builder does not return results
+	    else
+	    {
+	        $session_times = $session_times = SessionTime::with('movie', 'cinema')
+                    	        ->where('cinema_id' , '=', $cinema->id)
+                    	        ->get();
 	    }
-	    $session_times = $session_times->get();
 	    
 	    if($session_times)
 	    {
 	        $response = Response::make($session_times->toJson(), 200);
 	        $response->header('Content-Type', 'application/json');
+	        
+	        // date('Y-m-d H:i:s', $date_time) . ' => ' . date('Y-m-d H:i:s', $range['start_time']) . ' - ' . date('Y-m-d H:i:s', $range['stop_time']);
+	        //$queries = DB::getQueryLog();
+	        //$last_query = end($queries);
 	        return $response;
 	    }
 	}
@@ -119,7 +127,7 @@ class CinemaMoviesController extends \BaseController {
 	 * This function gets the start and stop time day range given a unix time
 	 *
 	 * @param  int  $date_time - unix time
-	 * @return array $array
+	 * @return array $a 
 	 */
 	private function get_day_start_stop_date_time($date_time=null)
 	{
@@ -132,10 +140,10 @@ class CinemaMoviesController extends \BaseController {
 	    $month     = date('m', $date_time);
 	    $day       = date('d', $date_time);
 	     
-	    $array = array();
-	    $array['start_time'] = mktime(0, 0, 0, $month, $day, $year);
-	    $array['stop_time']  = mktime(23, 59, 59, $month, $day, $year);
+	    $a = array();
+	    $a[0] = mktime(0, 0, 0, $month, $day, $year);
+	    $a[1] = mktime(23, 59, 59, $month, $day, $year);
 	    
-	    return $array;
+	    return $a ;
 	}
 }
