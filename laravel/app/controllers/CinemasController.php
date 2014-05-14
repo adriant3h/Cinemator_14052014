@@ -9,7 +9,9 @@ class CinemasController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+	    // 1. get all cinemas
+	    $cinemas = Cinema::all()->toJson();
+	    return $cinemas;
 	}
 
 
@@ -20,7 +22,7 @@ class CinemasController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+	    App::abort(404);
 	}
 
 
@@ -31,7 +33,7 @@ class CinemasController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+	    App::abort(404);
 	}
 
 
@@ -43,7 +45,7 @@ class CinemasController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		return "show cinema $id";
 	}
 
 
@@ -55,7 +57,7 @@ class CinemasController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+	    App::abort(404);
 	}
 
 
@@ -67,7 +69,7 @@ class CinemasController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+	    App::abort(404);
 	}
 
 
@@ -79,7 +81,7 @@ class CinemasController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+	    App::abort(404);
 	}
 
 
