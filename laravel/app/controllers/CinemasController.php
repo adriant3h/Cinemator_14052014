@@ -1,5 +1,4 @@
 <?php
-
 class CinemasController extends \BaseController {
 
 	/**
@@ -16,7 +15,7 @@ class CinemasController extends \BaseController {
 	    $response = Response::make($cinemas, 200);
 	    $response->header('Content-Type', 'application/json');
 	    
-	    return $response;
+	    return $response; // ResponseFactory::create($cinemas);
 	}
 
 
@@ -48,8 +47,10 @@ class CinemasController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($name)
 	{
+	    $cinema = Cinema::where('name' , '=', $name)->first()->toJson();
+	    
 		return "show cinema $id";
 	}
 
